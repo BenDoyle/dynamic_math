@@ -1,4 +1,5 @@
 require 'treetop'
+load 'lib/operations.rb'
 Treetop.load "lib/arithmetic"
 
 parser = ArithmeticParser.new
@@ -8,4 +9,4 @@ else
   puts 'failure'
 end
 
-
+puts parser.parse('1+2').value

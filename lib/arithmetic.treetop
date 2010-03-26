@@ -1,23 +1,23 @@
 grammar Arithmetic
   rule additive
-    multitive '+' additive {
-      def value
-        multitive.value + additive.value
-      end
-    }
+    multitive '+' additive <AdditiveNode>
     /
     multitive
   end
 
   rule multitive
-    primary '*' multitive / primary
+    primary '*' multitive <MultitiveNode>
+    /
+    primary
   end
 
   rule primary
-    '(' additive ')' / number
+    '(' additive ')' <PrimaryNode>
+    /   
+    number
   end
 
   rule number
-    [1-9] [0-9]*
+    first_digit:[1-9] rest_digits:[0-9]* <NumberNode>
   end
 end
