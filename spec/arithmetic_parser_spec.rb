@@ -5,6 +5,7 @@ Treetop.load "lib/arithmetic"
 describe ArithmeticParser do
   before(:each) do
     @parser = ArithmeticParser.new
+    @tol = 1e-12
   end
   it 'should handle an integer' do
     @parser.parse('01023').value.should == 1023
@@ -47,8 +48,24 @@ describe ArithmeticParser do
   end
   it 'should handle parens' do
     @parser.parse('(1+2)*3').value.should == 9
+    @parser.parse('(1+2*3)*3').value.should == (1+2*3)*3
+    @parser.parse('(2*1+2)*3').value.should == (2*1+2)*3
   end
-  it 'should handle parens' do
+  it 'should handle parens and substitutions' do
     @parser.parse('(1+2.0)*3.1*x').value({'x'=>3.2 }).should == (1+2.0)*3.1*3.2
   end
+  it 'should handle funtions' do
+    @parser.parse('log(2.0)').value.should == log(2.0)
+  end
+  it 'should handle numerical constants' do
+    @parser.parse('PI + 1').value.should == Math::PI + 1.0
+  end
+  it 'should handle big complicated expressions' do
+    expr =  2.0 + 3 * log(2*3.0 +PI) - 2 / 5.0
+    (@parser.parse('2.0 + 3 * log(2*3.0 +PI) - 2 / 5.0').value - expr).should < @tol
+  end
+  it 'should handle derivatives' do
+    pending
+  end
+
 end

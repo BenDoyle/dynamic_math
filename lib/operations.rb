@@ -1,3 +1,4 @@
+include Math
 module AddNode
   def value(env = { })
     op1.value(env) + op2.value(env)
@@ -16,6 +17,16 @@ end
 module DivideNode
   def value(env = { })
     op1.value(env) / op2.value(env)
+  end
+end
+module LogNode
+  def value(env = { })
+    Math::log(additive.value(env))
+  end
+end
+module PiNode
+  def value(env = { })
+    Math::PI
   end
 end
 module ParensNode

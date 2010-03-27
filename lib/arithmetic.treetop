@@ -6,7 +6,6 @@ grammar Arithmetic
     /
     multitive
   end
-
   rule multitive
     op1:primary space '*' space op2:multitive <MultiplyNode>
     /
@@ -14,15 +13,20 @@ grammar Arithmetic
     /
     primary
   end
-
   rule primary
-    '(' space additive space ')' <ParensNode>
-    /
-    number
+    function / parens / number
   end
-
-  rule number
-    scientific / float / integer / variable
+  rule parens
+    '(' space additive space ')' <ParensNode>
+  end
+  rule function
+    'log(' space additive space ')' <LogNode>
+  end
+    rule number
+    constant / scientific / float / integer / variable
+  end
+  rule constant
+    'PI' <PiNode>
   end
   rule integer
     ('-')? [0-9]+ <IntegerNode>
