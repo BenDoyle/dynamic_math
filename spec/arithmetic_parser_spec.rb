@@ -6,8 +6,26 @@ describe ArithmeticParser do
   before(:each) do
     @parser = ArithmeticParser.new
   end
-  it 'should handle a number' do
-    @parser.parse('123').value.should == 123
+  it 'should handle an integer' do
+    @parser.parse('01023').value.should == 1023
+  end
+  it 'should handle an integer' do
+    @parser.parse('-01023').value.should == -1023
+  end
+  it 'should handle a float' do
+    @parser.parse('0.1023').value.should == 0.1023
+  end
+  it 'should handle a float' do
+    @parser.parse('-0.1023').value.should == -0.1023
+  end
+  it 'should handle scientific notation' do
+    @parser.parse('-0.1023E23').value.should == -0.1023E23
+  end
+  it 'should handle scientific notation' do
+    @parser.parse('0.1023e-23').value.should == 0.1023E-23
+  end
+  it 'should handle variables' do
+    @parser.parse('x').value({'x'=> 23}).should == 23
   end
   it 'should handle a simple addition' do
     @parser.parse('12+3').value.should == 15
@@ -21,5 +39,8 @@ describe ArithmeticParser do
   end
   it 'should handle parens' do
     @parser.parse('(1+2)*3').value.should == 9
+  end
+  it 'should handle parens' do
+    @parser.parse('(1+2)*3*x').value({'x'=>3.2 }).should == 28.8
   end
 end

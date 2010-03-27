@@ -1,23 +1,38 @@
-class AdditiveNode < Treetop::Runtime::SyntaxNode
-  def value
+module AdditiveNode
+  def value(env ={ })
     multitive.value + additive.value
   end
 end
 
-class MultitiveNode < Treetop::Runtime::SyntaxNode
-  def value
+module MultitiveNode
+  def value(env ={ })
     multitive.value * primary.value
   end
 end
 
-class PrimaryNode < Treetop::Runtime::SyntaxNode
-  def value
+module PrimaryNode
+  def value(env ={ })
     additive.value
   end
 end
 
-class NumberNode < Treetop::Runtime::SyntaxNode
-  def value
-    (first_digit.text_value + rest_digits.text_value).to_i
+module IntegerNode
+  def value(env ={ })
+    text_value.to_i
+  end
+end
+
+module FloatNode
+  def value(env ={ })
+    text_value.to_f
+  end
+end
+
+module VariableNode
+  def value(env ={ })
+    env[name]
+  end 
+  def name
+    text_value
   end
 end
