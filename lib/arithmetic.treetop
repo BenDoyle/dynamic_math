@@ -1,43 +1,42 @@
 grammar Arithmetic
   rule additive
-    multitive '+' additive <AdditiveNode>
+    op1:multitive space '+' space op2:additive <AddNode>
+    /
+    op1:multitive space '-' space op2:additive <SubtractNode>
     /
     multitive
   end
 
   rule multitive
-    primary '*' multitive <MultitiveNode>
+    op1:primary space '*' space op2:multitive <MultiplyNode>
+    /
+    op1:primary space '/' space op2:multitive <DivideNode>
     /
     primary
   end
 
   rule primary
-    '(' additive ')' <PrimaryNode>
-    /   
+    '(' space additive space ')' <ParensNode>
+    /
     number
-  end
-
-  rule space
-    ' '*
   end
 
   rule number
     scientific / float / integer / variable
   end
-
   rule integer
     ('-')? [0-9]+ <IntegerNode>
   end
-
   rule float
     ('-')? [0-9]+ '.' [0-9]+ <FloatNode>
   end
-
   rule scientific
     ('-')? [0-9]+ '.' [0-9]+ [eE] ('-')? [0-9]+ <FloatNode>
   end
-
   rule variable
     [a-z]+ <VariableNode>
+  end
+  rule space
+    ' '*
   end
 end

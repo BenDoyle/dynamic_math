@@ -1,35 +1,40 @@
-module AdditiveNode
-  def value(env ={ })
-    multitive.value + additive.value
+module AddNode
+  def value(env = { })
+    op1.value(env) + op2.value(env)
   end
 end
-
-module MultitiveNode
-  def value(env ={ })
-    multitive.value * primary.value
+module MultiplyNode
+  def value(env = { })
+    op1.value(env) * op2.value(env)
   end
 end
-
-module PrimaryNode
-  def value(env ={ })
-    additive.value
+module SubtractNode
+  def value(env = { })
+    op1.value(env) - op2.value(env)
   end
 end
-
+module DivideNode
+  def value(env = { })
+    op1.value(env) / op2.value(env)
+  end
+end
+module ParensNode
+  def value(env = { })
+    additive.value(env)
+  end
+end
 module IntegerNode
-  def value(env ={ })
+  def value(env = { })
     text_value.to_i
   end
 end
-
 module FloatNode
-  def value(env ={ })
+  def value(env = { })
     text_value.to_f
   end
 end
-
 module VariableNode
-  def value(env ={ })
+  def value(env = { })
     env[name]
   end 
   def name
