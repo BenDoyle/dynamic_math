@@ -1,8 +1,8 @@
 require 'treetop'
-load "lib/parser/basic_types_logic.rb"
-load "lib/parser/arithmetic_logic.rb"
-Treetop.load "lib/parser/basic_types"
-Treetop.load "lib/parser/arithmetic"
+load "lib/basic_types_logic.rb"
+load "lib/arithmetic_logic.rb"
+Treetop.load "lib/basic_types"
+Treetop.load "lib/arithmetic"
 include Math
 
 describe ArithmeticParser do
