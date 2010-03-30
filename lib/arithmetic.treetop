@@ -1,4 +1,6 @@
 grammar Arithmetic
+  include BasicTypes
+
   rule additive
     op1:multitive space '+' space op2:additive <AddNode>
     /
@@ -21,26 +23,5 @@ grammar Arithmetic
   end
   rule function
     'log(' space additive space ')' <LogNode>
-  end
-    rule number
-    constant / scientific / float / integer / variable
-  end
-  rule constant
-    'PI' <PiNode>
-  end
-  rule integer
-    ('-')? [0-9]+ <IntegerNode>
-  end
-  rule float
-    ('-')? [0-9]+ '.' [0-9]+ <FloatNode>
-  end
-  rule scientific
-    ('-')? [0-9]+ '.' [0-9]+ [eE] ('-')? [0-9]+ <FloatNode>
-  end
-  rule variable
-    [a-z]+ <VariableNode>
-  end
-  rule space
-    ' '*
   end
 end

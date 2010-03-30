@@ -1,6 +1,9 @@
 require 'treetop'
-load 'lib/operations.rb'
-Treetop.load "lib/arithmetic"
+load "lib/parser/basic_types_logic.rb"
+load "lib/parser/arithmetic_logic.rb"
+Treetop.load "lib/parser/basic_types"
+Treetop.load "lib/parser/arithmetic"
+include Math
 
 describe ArithmeticParser do
   before(:each) do
@@ -64,8 +67,4 @@ describe ArithmeticParser do
     expr =  2.0 + 3 * log(2*3.0 +PI) - 2 / 5.0
     (@parser.parse('2.0 + 3 * log(2*3.0 +PI) - 2 / 5.0').value - expr).should < @tol
   end
-  it 'should handle derivatives' do
-    pending
-  end
-
 end
