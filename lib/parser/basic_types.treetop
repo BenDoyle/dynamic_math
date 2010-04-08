@@ -1,18 +1,18 @@
 grammar BasicTypes
   rule number
-    constant / scientific / float / integer / variable
+   constant / scientific / float / integer / variable
   end
   rule constant
     'PI' <PiNode>
   end
   rule integer
-    ('-')? [0-9]+ <IntegerNode>
+    [0-9]+ <IntegerNode>
   end
   rule float
-    ('-')? [0-9]+ '.' [0-9]+ <FloatNode>
+    [0-9]+ '.' [0-9]+ <FloatNode>
   end
   rule scientific
-    ('-')? [0-9]+ '.' [0-9]+ [eE] ('-')? [0-9]+ <FloatNode>
+    [0-9]+ '.' [0-9]+ [eE] ('-')? [0-9]+ <FloatNode>
   end
   rule variable
     [A-Za-z0-9_]+ <VariableNode>
@@ -21,7 +21,7 @@ grammar BasicTypes
     comment / blank
   end
   rule comment
-    blank '#' [ a-zA-Z0-9_,\.]* [\n] blank
+    (blank '#' (![\n] .)* [\n] blank)+
   end
   rule blank
     [ \n\t]*

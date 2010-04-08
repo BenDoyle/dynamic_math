@@ -1,0 +1,49 @@
+grammar Expression
+  include BasicTypes
+
+  rule additive
+    op1:multitive space '+' space op2:additive <AddNode>
+    /
+    op1:multitive space '-' space op2:additive <SubtractNode>
+    /
+    op1:multitive space '==' space op2:additive <EqualsNode>
+    /
+    op1:multitive space '!=' space op2:additive <NotEqualsNode>
+    /
+    op1:multitive space '<' space op2:additive <LessThanNode>
+    /
+    op1:multitive space '>' space op2:additive <GreaterThanNode>
+    /
+    op1:multitive space '<=' space op2:additive <LessThanEqualNode>
+    /
+    op1:multitive space '>=' space op2:additive <GreaterThanEqualNode>
+    /
+    multitive
+  end
+  rule multitive
+    op1:primary space '*' space op2:multitive <MultiplyNode>
+    /
+    op1:primary space '/' space op2:multitive <DivideNode>
+    /
+    primary
+  end
+  rule primary
+    negation:('-'?) op1:( function / parens / number ) <PrimaryNode>
+  end
+  rule parens
+    '(' space op1:additive space ')' <ParensNode>
+  end
+  rule function
+    ( 'log(' / 'LOG(' ) space op1:additive space ')' <LogNode>
+    /
+    ( 'logistic(' / 'LOGISTIC(' ) space op1:additive space ')' <LogisticNode>
+    /
+    ( 'modulo(' / 'MODULO(' ) space op1:additive space ',' space op2:additive space  ')' <ModuloNode>
+    /
+    ( 'if(' / 'IF(' ) space op1:additive space ',' space op2:additive space ',' space op3:additive space  ')' <IfNode>
+    /
+    ( 'min(' / 'MIN(' ) space op1:additive space ',' space op2:additive space ')' <MinNode>
+    /
+    ( 'max(' / 'MAX(' ) space op1:additive space ',' space op2:additive space ')' <MaxNode>
+  end
+end
