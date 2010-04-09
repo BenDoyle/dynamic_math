@@ -101,7 +101,20 @@ describe ExpressionParser do
   end
   
   it 'should handle symbolic differentiation' do
-    @parser.parse('x').partial('x').text_value.should == '1'
-    @parser.parse('x*x').partial('x').text_value.should == 'x+x'
+    @parser.parse('x').partial('x').should   == '1'
+    @parser.parse('x*x').partial('x').should == '1 * x + x * 1'
+    @parser.parse('2*x').partial('x').should == '0 * x + 2 * 1'
+    @parser.parse('2*x-y').partial('x').should == '0 * x + 2 * 1 - 0'
+    @parser.parse('2*x-y').partial('y').should == '0 * x + 2 * 0 - 1'
+  end
+
+  it 'should handle simplifications' do
+    @parser.parse('2*0').simplify.should == '0'
+    @parser.parse('2*1').simplify.should == '2'
+    @parser.parse('2+0').simplify.should == '2'
+    @parser.parse('1 * x + x * 1').simplify.should == 'x + x'
+    @parser.parse('0 * x + 2 * 1').simplify.should == '2'
+    @parser.parse('0 * x + 2 * 1 - 0').simplify.should == '2'
+    @parser.parse('0 * x + 2 * 0 - 1').simplify.should == '-1'
   end
 end

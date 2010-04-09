@@ -8,4 +8,7 @@ module IfNode
   def value(env ={ })
     (op1.value(env)==0) ? op3.value(env) : op2.value(env)
   end
+  def simplify
+    "if(#{op1.simplify}, #{op2.simplify}, #{op3.simplify})"
+  end
 end

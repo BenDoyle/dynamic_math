@@ -2,10 +2,22 @@ module BasicVariable
   def variables
     [text_value]
   end
+  def partial(variable)
+    (text_value == variable) ? "1" : "0"
+  end
+  def simplify
+    text_value
+  end
 end
 module NotVariable
   def variables
     []
+  end
+  def partial(variable)
+    "0"
+  end
+  def simplify
+    text_value
   end
 end
 module PiNode
