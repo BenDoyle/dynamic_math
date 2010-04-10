@@ -117,4 +117,9 @@ describe ExpressionParser do
     @parser.parse('0 * x + 2 * 1 - 0').simplify.should == '2'
     @parser.parse('0 * x + 2 * 0 - 1').simplify.should == '-1'
   end
+
+  it 'should compile to language XXX' do
+    # compile to native c or fortran, execute-able from ruby
+    pending 
+  end
 end
