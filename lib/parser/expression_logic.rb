@@ -17,10 +17,6 @@ module PrimaryNode
     end
   end
   def simplify
-    if negation.text_value.empty?
-    "#{op1.simplify}"
-    else
-    "-#{op1.simplify}"
-    end
+    "#{negation.text_value.empty? ? '' : '-'}#{op1.simplify}".sub('--','')
   end
 end

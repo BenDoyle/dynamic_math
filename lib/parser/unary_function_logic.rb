@@ -37,6 +37,10 @@ module ParensNode
     "( #{op1.partial(variable)} )"
   end
   def simplify
-    "(#{op1.simplify})"
+    if op1.extension_modules.include? PrimaryNode
+      "#{op1.simplify}"
+    else
+      "(#{op1.simplify})"
+    end
   end
 end
